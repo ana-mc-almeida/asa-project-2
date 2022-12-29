@@ -16,18 +16,15 @@ vector<weightedEdge> create_graph()
     vector<weightedEdge> edges;
 
     // read number of vertices
-    if (scanf("%d", &V) == 1)
-        ;
+    scanf("%d", &V);
 
     // read number of edges
-    if (scanf("%d", &E) == 1)
-        ;
+    scanf("%d", &E);
 
     // read edges weight
     for (int i = 0; i < E; i++)
     {
-        if (scanf("%d %d %d", &u, &v, &w) == 3)
-            ;
+        scanf("%d %d %d", &u, &v, &w);
         edges.push_back(make_pair(w, make_pair(u, v)));
     }
 
