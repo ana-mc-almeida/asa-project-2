@@ -57,8 +57,7 @@ int main()
     vector<weightedEdge> edges = create_graph();
     sort(edges.rbegin(), edges.rend());
 
-    int a, b;
-    unsigned long max = 0;
+    int max = 0, a, b;
 
     for (int i = 0; i < E; i++)
     {
