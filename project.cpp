@@ -28,7 +28,7 @@ vector<weightedEdge> create_graph()
         edges.push_back(make_pair(w, make_pair(u, v)));
     }
 
-    root.resize(V);
+    root.resize(V + 1);
     for (int i = 0; i < V; i++)
         root[i] = i;
 
