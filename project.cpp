@@ -8,7 +8,8 @@ typedef pair<int, int> edge;
 typedef pair<int, edge> weightedEdge;
 
 int V, E;
-vector<int> root;
+vector<int> parent;
+vector<int> ranks;
 
 vector<weightedEdge> create_graph()
 {
@@ -28,28 +29,36 @@ vector<weightedEdge> create_graph()
         edges.push_back(make_pair(w, make_pair(u, v)));
     }
 
-    root.resize(V + 1);
+    parent.resize(V + 1);
+    ranks.resize(V + 1);
     for (int i = 0; i < V; i++)
-        root[i] = i;
+    {
+        parent[i] = i;
+        ranks[i] = 0;
+    }
 
     return edges;
 }
 
 int findSet(int v)
 {
-    while (root[v] != v)
+    while (parent[v] != v)
     {
-        root[v] = root[root[v]];
-        v = root[v];
+        parent[v] = parent[parent[v]];
+        v = parent[v];
     }
     return v;
 }
 
-void unionSets(int u, int v)
+void unionSets(int a, int b)
 {
-    int uSet = findSet(u);
-    int vSet = findSet(v);
-    root[uSet] = root[vSet];
+    if (ranks[a] > ranks[b])
+        parent[b] = a;
+    else
+        parent[a] = b;
+
+    if (ranks[a] == ranks[b])
+        ranks[b]++;
 }
 
 int main()
@@ -57,17 +66,20 @@ int main()
     vector<weightedEdge> edges = create_graph();
     sort(edges.rbegin(), edges.rend());
 
-    int max = 0, a, b;
+    int max = 0, a, b, aSet, bSet;
 
     for (int i = 0; i < E; i++)
     {
         a = edges[i].second.first;
         b = edges[i].second.second;
 
-        if (findSet(a) != findSet(b))
+        aSet = findSet(a);
+        bSet = findSet(b);
+
+        if (aSet != bSet)
         {
             max += edges[i].first;
-            unionSets(a, b);
+            unionSets(aSet, bSet);
         }
     }
 
